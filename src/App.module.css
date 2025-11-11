@@ -1,0 +1,439 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+* {
+  /* 영어는 Montserrat, 한글은 TillVictoryComes 적용 */
+  font-family: 'Montserrat', 'Escoredream', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #f9fafd;
+}
+
+/* 헤더 */
+.header {
+  display: flex;
+  align-items: center;
+  height: 60px;
+  background-color: #fff;
+  color: #1e2d40;
+  padding: 0 20px;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05);
+  z-index: 100;
+  border-bottom: 1px solid #e3e6ed;
+}
+
+.header h1 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1e2d40;
+}
+
+.headerRight {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* 아이콘 버튼 스타일 */
+.iconButton {
+  background: none;
+  border: none;
+  color: #5e6e82;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 6px;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 36px;
+  height: 36px;
+}
+
+.iconButton:hover {
+  color: #1e2d40;
+}
+
+/* 알림 뱃지 */
+.badge {
+  position: absolute;
+  top: 2px;
+  right: 3px;
+  background-color: #ef4444;
+  color: white;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 5px;
+  border-radius: 10px;
+  min-width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+/* 구분선 */
+.divider {
+  width: 1px;
+  height: 24px;
+  background-color: #e3e6ed;
+  margin: 0 8px;
+}
+
+/* 사용자 프로필 영역 */
+.userProfile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.userProfile:hover {
+opacity: 0.8; /* 살짝 투명하게 */
+}
+
+/* 사용자 정보 */
+.userInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.userName {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1e2d40;
+  line-height: 1.2;
+}
+
+.userRole {
+  font-size: 12px;
+  color: #9ca3af;
+  line-height: 1.2;
+}
+
+/* 아바타 이미지 */
+.avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid #e3e6ed;
+  flex-shrink: 0;
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.refreshButton {
+  background: none;
+  border: none;
+  color: #5e6e82;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.refreshButton:hover {
+  color: #1e2d40;
+}
+
+/* 레이아웃 바디 */
+.layoutBody {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+}
+
+/* 사이드바 */
+.sidebar {
+  width: 260px;
+  background-color: #fff;
+  color: #5e6e82;
+  overflow: hidden;
+  transition: width 0.3s ease;
+  box-shadow: 1px 0 0 rgba(0, 0, 0, 0.05);
+  flex-shrink: 0;
+  border-right: 1px solid #e3e6ed;
+  position: relative;
+  z-index: 10;
+}
+
+.sidebar.closed {
+  width: 70px;
+}
+
+.sidebarContent {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebarNav {
+  padding: 12px 0;
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* 사이드바 닫혔을 때 섹션 제목 숨김 */
+.sidebar.closed .navSection h3 {
+  display: none;
+}
+
+.navSection {
+  margin-bottom: 8px;
+}
+
+.navSection h3 {
+  padding: 16px 20px 8px 20px;
+  font-size: 13px;
+  color: #9ca3af;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: all 0.3s ease;
+}
+
+.navSection ul {
+  list-style: none;
+  padding: 0;
+}
+
+.navSection li {
+  margin: 0;
+  position: relative;
+}
+
+.navSection a {
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  color: #5e6e82;
+  text-decoration: none;
+  transition: all 0.2s;
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+  position: relative;
+  border-radius: 0;
+}
+
+.navSection a:hover {
+  background-color: #f9fafb;
+  color: #1e2d40;
+}
+
+.navSection a.active {
+  background-color: #eef2ff;
+  color: #3874ff;
+  font-weight: 600;
+}
+
+/* 왼쪽 강조선 */
+.navSection a::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background-color: #3874ff;
+  transform: scaleY(0);
+  transition: transform 0.2s;
+  z-index: 1;
+}
+
+.navSection a:hover::before {
+  transform: scaleY(1);
+}
+
+.navSection a.active::before {
+  transform: scaleY(1);
+}
+
+/* 아이콘 스타일 */
+.navIcon {
+  margin-right: 12px;
+  font-size: 18px;
+  min-width: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* 사이드바 닫혔을 때 텍스트 숨김 */
+.sidebar.closed .navSection a span {
+  display: none;
+}
+
+/* 사이드바 닫혔을 때 패딩 조정 */
+.sidebar.closed .navSection a {
+  padding: 10px;
+  justify-content: center;
+}
+
+.sidebar.closed .navIcon {
+  margin-right: 0;
+}
+
+/* 툴팁 스타일 */
+.tooltip {
+  position: fixed;
+  background-color: #ffffff;
+  color: #1e2d40;
+  padding: 14px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 400;
+  white-space: nowrap;
+  z-index: 10000;
+  /* box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12); */
+  pointer-events: none;
+  border: 1px solid #c9cbcf;
+  min-width: 100px;
+  /* text-align: center; */
+  display: flex; /* flexbox 추가 */
+  align-items: center; /* 세로 중앙 정렬 */
+  
+}
+
+.tooltip span {
+  display: block;
+  line-height: 1;
+  transform: translateY(-1px); /* 필요시 미세 조정 */
+}
+
+/* 툴팁 꼬리 (왼쪽) */
+.tooltip::before {
+  
+  content: '';
+  position: absolute;
+  left: -10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-top: 8px solid transparent; /* 크기 증가 */
+  border-bottom: 8px solid transparent; /* 크기 증가 */
+  border-right: 10px solid #c9cbcf; /* 길이 증가 */
+}
+
+.tooltip::after {
+  
+  content: '';
+  position: absolute;
+  left: -9px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-top: 7px solid transparent; /* 크기 증가 */
+  border-bottom: 7px solid transparent; /* 크기 증가 */
+  border-right: 9px solid #ffffff; /* 길이 증가 */
+}
+
+/* 사이드바 푸터 (토글 버튼 영역) */
+.sidebarFooter {
+  padding: 16px;
+  border-top: 1px solid #e3e6ed;
+  display: flex;
+  justify-content: flex-end;
+  background-color: #fff;
+  flex-shrink: 0;
+}
+
+.sidebarToggleBottom {
+  background: none;
+  border: 1px solid #e3e6ed;
+  color: #5e6e82;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 6px;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+}
+
+.sidebarToggleBottom:hover {
+  background-color: #f3f4f6;
+  color: #1e2d40;
+  border-color: #d1d5db;
+}
+
+/* 사이드바 닫혔을 때 토글 버튼 중앙 정렬 */
+.sidebar.closed .sidebarFooter {
+  justify-content: center;
+  padding: 16px 10px;
+}
+
+/* 스크롤바 스타일 */
+.sidebarNav::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebarNav::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebarNav::-webkit-scrollbar-thumb {
+  background: #e3e6ed;
+  border-radius: 3px;
+}
+
+.sidebarNav::-webkit-scrollbar-thumb:hover {
+  background: #d1d5db;
+}
+
+/* 컨텐츠 영역 */
+.content {
+  flex: 1;
+  padding: 30px;
+  overflow-y: auto;
+  background-color: #f9fafd;
+  transition: all 0.3s ease;
+  min-width: 0;
+}
+
+/* 반응형 */
+@media (max-width: 768px) {
+  .sidebar {
+    position: absolute;
+    height: calc(100vh - 60px);
+    z-index: 50;
+  }
+  
+  .sidebar.closed {
+    width: 0;
+  }
+}
