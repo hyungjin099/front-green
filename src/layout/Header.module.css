@@ -1,0 +1,145 @@
+
+/* 헤더 */
+.header {
+  display: flex;
+  align-items: center;
+  height: 60px;
+  background-color: #fff;
+  color: #1e2d40;
+  padding: 0 20px;
+  /* box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05); */
+  z-index: 100;
+  border-bottom: 1px solid #e3e6ed;
+}
+
+.header h1 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1e2d40;
+}
+
+.headerRight {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* 아이콘 버튼 스타일 */
+.iconButton {
+  background: none;
+  border: none;
+  color: #5e6e82;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 6px;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 36px;
+  height: 36px;
+}
+
+.iconButton:hover {
+  color: #1e2d40;
+}
+
+/* 알림 뱃지 */
+.badge {
+  position: absolute;
+  top: 2px;
+  right: 3px;
+  background-color: #ef4444;
+  color: white;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 5px;
+  border-radius: 10px;
+  min-width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+/* 구분선 */
+.divider {
+  width: 1px;
+  height: 24px;
+  background-color: #e3e6ed;
+  margin: 0 8px;
+}
+
+/* 사용자 프로필 영역 */
+.userProfile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.userProfile:hover {
+opacity: 0.8; /* 살짝 투명하게 */
+}
+
+/* 사용자 정보 */
+.userInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.userName {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1e2d40;
+  line-height: 1.2;
+}
+
+.userRole {
+  font-size: 12px;
+  color: #9ca3af;
+  line-height: 1.2;
+}
+
+/* 아바타 이미지 */
+.avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid #e3e6ed;
+  flex-shrink: 0;
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.refreshButton {
+  background: none;
+  border: none;
+  color: #5e6e82;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.refreshButton:hover {
+  color: #1e2d40;
+}
+

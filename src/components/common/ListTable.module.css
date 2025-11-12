@@ -1,0 +1,23 @@
+.list_table{
+  width: 100%;
+  text-align: center;
+  border: none;
+}
+
+.list_table td{
+  padding: 10px;
+}
+
+.list_table > thead > tr{
+  background-color: #895ff8;
+  /* border-top: 1px solid #673de6;    
+  border-bottom: 2px solid #673de6; */
+  color: white;   
+  font-weight: 500; 
+} 
+
+.list_table > tbody > tr{
+  border-bottom: 1px solid #dddddd;
+}
+
+
