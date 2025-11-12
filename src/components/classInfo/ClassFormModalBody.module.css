@@ -1,0 +1,26 @@
+
+.modal_container > div{
+  margin-bottom: 1rem;
+}
+
+.flex_row{
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.flex_row > div {
+  width: 100%;
+}
+
+.week_p{
+  margin-bottom: 0.25rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: rgb(100, 100, 100);
+}
+
+.week_div{
+  display: inline-flex;
+  gap: 0.5rem;;
+}

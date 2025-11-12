@@ -1,10 +1,26 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styles from './ClassInfoForm.module.css'
 import ListTable from '../../components/common/ListTable'
 import Input from '../../components/common/Input'
 import Select from '../../components/common/Select'
+import Textarea from '../../components/common/Textarea'
+import Checkbox from '../../components/common/Checkbox'
+import Radio from '../../components/common/Radio'
+import Modal from '../../components/common/Modal'
+import ClassFormModalBody from '../../components/classInfo/ClassFormModalBody'
+
 
 const ClassInfoForm = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const openModal = (size = 'medium') => {
+    setIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.title_div}></div>
@@ -47,6 +63,46 @@ const ClassInfoForm = () => {
             <option value="">56</option>
           </Select>
         </div>
+
+        <Textarea /> <br />
+        <Checkbox /> <br />
+        <Radio /> <br />
+
+        <div className={styles.buttonGroup}>
+        <button 
+          className={`${styles.button} ${styles.primary}`}
+          onClick={() => openModal('small')}
+        >
+          Small Modal
+        </button>
+        <button 
+          className={`${styles.button} ${styles.primary}`}
+          onClick={() => openModal('medium')}
+        >
+          Medium Modal
+        </button>
+        <button 
+          className={`${styles.button} ${styles.primary}`}
+          onClick={() => openModal('large')}
+        >
+          Large Modal
+        </button>
+        <button 
+          className={`${styles.button} ${styles.primary}`}
+          onClick={() => openModal('xlarge')}
+        >
+          X-Large Modal
+        </button>
+      </div>
+
+      <Modal
+        isOpen={isOpen}
+        onClose={closeModal}
+        title="신규 과정 등록"
+        size='medium'
+      >
+        <ClassFormModalBody />
+      </Modal>
 
         
       </div>

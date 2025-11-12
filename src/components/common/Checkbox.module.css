@@ -1,0 +1,58 @@
+.checkbox {
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  padding-left: 1.8rem;
+  margin-right: 1rem;
+  font-size: 0.95rem;
+  color: #424549;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* 실제 체크박스 숨김 */
+.checkbox input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* 커스텀 체크박스 */
+.checkmark {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 1.2rem;
+  width: 1.2rem;
+  background-color: #fff;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+/* 체크 시 */
+.checkbox input:checked ~ .checkmark {
+  background-color: #673de6;
+  border-color: #673de6;
+}
+
+/* 체크 표시 (✔) */
+.checkmark::after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.checkbox input:checked ~ .checkmark::after {
+  display: block;
+  left: 0.35rem;
+  top: 0.05rem;
+  width: 0.3rem;
+  height: 0.6rem;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
