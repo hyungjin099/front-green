@@ -4,18 +4,12 @@
   justify-content: flex-start;
   padding: 0.2rem 0.6rem;
   background: #ffffff;
-  border: 2px solid #e2e8f0;
+  border: 1px solid #e2e8f0;
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.2s ease;
   user-select: none;
   width: auto;
-}
-
-.checkboxButton:hover {
-  border-color: #cbd5e1;
-  
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
 }
 
 .checkboxButton.checked {
@@ -48,16 +42,14 @@
   width: 14px;
   height: 14px;
   background: #ffffff;
-  border: 2px solid #e2e8f0;
+  border: 1px solid #e2e8f0;
   border-radius: 4px;
   transition: all 0.2s ease;
   margin-right: 0.3rem;
   flex-shrink: 0;
 }
 
-.checkboxButton:hover .checkmark {
-  border-color: #cbd5e1;
-}
+
 
 .checkboxButton.checked .checkmark {
   background: #ffffff;
@@ -71,116 +63,95 @@
 }
 
 /* 월요일 - 파란색 */
-.monday {
+.green {
   background: #ffffff;
+  border-color: #92d781;
 }
 
-.monday.checked {
-  background: #3b82f6;
-  border-color: #3b82f6;
+.green.checked {
+  background: #d9fbd0;
+  border-color: #92d781;
 }
 
-.monday.checked .checkmark {
-  color: #3b82f6;
+.green.checked .checkmark {
+  color: #3a6c09;
 }
 
-.monday:hover {
-  background: #f0f7ff;
+.green.checked .label{
+  color: #3a6c09;
 }
 
-.monday.checked:hover {
-  background: #2563eb;
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
-}
 
 /* 화요일 - 초록색 */
-.tuesday {
+.blue {
   background: #ffffff;
+    border-color: #88abff;
 }
 
-.tuesday.checked {
-  background: #10b981;
-  border-color: #10b981;
+.blue.checked {
+  background: #e5edff;
+  border-color: #88abff;
 }
 
-.tuesday.checked .checkmark {
-  color: #10b981;
+.blue.checked .checkmark {
+  color: #1e3cc7;
+}
+.blue.checked .label{
+  color: #1e3cc7;
 }
 
-.tuesday:hover {
-  background: #f0fdf4;
-}
-
-.tuesday.checked:hover {
-  background: #059669;
-  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
-}
 
 /* 수요일 - 노란색 */
-.wednesday {
+.yellow {
   background: #ffffff;
+    border-color: #ffcd87;
 }
 
-.wednesday.checked {
-  background: #f59e0b;
-  border-color: #f59e0b;
+.yellow.checked {
+  background: #ffefca;
+  border-color: #ffcd87;
 }
 
-.wednesday.checked .checkmark {
-  color: #f59e0b;
+.yellow.checked .checkmark {
+  color: #bc4716;
 }
-
-.wednesday:hover {
-  background: #fffbeb;
-}
-
-.wednesday.checked:hover {
-  background: #d97706;
-  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+.yellow.checked .label{
+  color: #bc4716;
 }
 
 /* 목요일 - 보라색 */
-.thursday {
+.purple {
   background: #ffffff;
+  border-color: #9062fa;
 }
 
-.thursday.checked {
-  background: #8b5cf6;
-  border-color: #8b5cf6;
+.purple.checked {
+  background: #d1bdff;
+  border-color: #9062fa;
 }
 
-.thursday.checked .checkmark {
-  color: #8b5cf6;
+.purple.checked .checkmark {
+  color: #4c0fdb;
+}
+.purple.checked .label{
+  color: #4c0fdb;
 }
 
-.thursday:hover {
-  background: #faf5ff;
-}
-
-.thursday.checked:hover {
-  background: #7c3aed;
-  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
-}
 
 /* 금요일 - 빨간색 */
-.friday {
+.red {
   background: #ffffff;
+  border-color: #f48573;
 }
 
-.friday.checked {
-  background: #ef4444;
-  border-color: #ef4444;
+.red.checked {
+  background: #ffe0db;
+  border-color: #f48573;
 }
 
-.friday.checked .checkmark {
-  color: #ef4444;
+.red.checked .checkmark {
+  color: #d13b00;
 }
-
-.friday:hover {
-  background: #fef2f2;
-}
-
-.friday.checked:hover {
-  background: #dc2626;
-  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+.red.checked .label{
+  color: #d13b00;
 }

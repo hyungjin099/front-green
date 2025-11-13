@@ -15,10 +15,12 @@ import { FaCalendar } from "react-icons/fa6";
 // }}
 
 const DatePicker = ({ 
-  value, 
-  onChange, 
   label = '날짜',
-  options = {} 
+  options = {},
+  name, 
+  value,
+  onChange,
+  ...props 
 }) => {
 
   const defaultOptions = {
@@ -27,14 +29,27 @@ const DatePicker = ({
     ...options
   };
 
+    const handleChange = (selectedDates) => {
+    // selectedDates[0]이 선택한 날짜
+    if (onChange) {
+      onChange({
+        target: {
+          name,
+          value: selectedDates[0] // Date 객체
+        }
+      });
+    }
+  };
+
   return (
     <div className={styles.inputGroup}>
       <Flatpickr
-        value={value}
-        onChange={onChange}
         options={defaultOptions}
+        value={value}
+        onChange={handleChange}
         placeholder=" "
         className={styles.input}
+        {...props}
       />
       <label className={styles.label}>{label}</label>
       <FaCalendar className={styles.calendarIcon}/>

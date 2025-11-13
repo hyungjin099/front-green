@@ -215,6 +215,7 @@
 .tooltip span {
   display: block;
   line-height: 1;
+  color : #673de6;
   /* 필요시 미세 조정 */
   /* transform: translateY(-1px);  */
 }

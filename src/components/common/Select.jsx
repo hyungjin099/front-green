@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import styles from './Select.module.css'
 
-const Select = ({ label = 'title', children, ...props }) => {
+const Select = ({ label = 'title', children, onChange, ...props }) => {
   const [hasValue, setHasValue] = useState(false);
-  console.log(hasValue)
+  
   const handleChange = (e) => {
     setHasValue(e.target.value !== "");
   };
@@ -17,7 +17,10 @@ const Select = ({ label = 'title', children, ...props }) => {
       </label>
       <select 
         className={styles.select}
-        onChange={(e) => {handleChange(e)}} 
+        onChange={(e) => {
+          handleChange(e);
+          onChange(e);
+        }} 
         {...props}
       >
         {children}

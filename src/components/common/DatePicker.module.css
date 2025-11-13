@@ -67,6 +67,11 @@
   font-size: 0.95rem !important;
 }
 
+:global(flatpickr-monthDropdown-month) {
+  font-size: 0.95rem !important;
+  font-weight: 300 !important;
+}
+
 :global(.numInput) {
   font-size: 0.95rem !important;
 }
@@ -104,10 +109,14 @@
 }
 
 /* 요일 헤더도 보라색 배경 */
+:global(.flatpickr-weekdaycontainer){
+  background-color: #673de6 !important;
+}
 :global(.flatpickr-weekdays) {
   background-color: #673de6 !important;
 }
 
 :global(.flatpickr-weekday) {
   color: #ffffff !important;
+  background-color: #673de6 !important;
 }

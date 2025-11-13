@@ -10,8 +10,8 @@ function createWindow() {
     height: 1000,
     title : '교육원 관리 시스템',
     webPreferences: {
-      nodeIntegration: true,
-      contextIsolation: false,
+      nodeIntegration: false,
+      contextIsolation: true,
     }
   });
 
