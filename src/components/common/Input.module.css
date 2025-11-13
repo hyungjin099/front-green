@@ -38,8 +38,8 @@
 /* input에 포커스되거나 값이 있을 때 라벨 이동 */
 .input:focus + .label,
 .input:not(:placeholder-shown) + .label {
-  top: 0.5rem;
+  top: 0.2rem;
   /* left: 0.65rem; */
   font-size: 0.8rem;
-  /* color: #673de6; */
+  color: #673de6;
 }

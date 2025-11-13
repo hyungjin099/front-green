@@ -69,7 +69,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 2rem 0.1rem 2rem;
+  padding: 0.3rem 1rem 0.3rem 1rem;
+  
+  
   /* border-bottom: 1px solid #e2e8f0; */
   /* background: linear-gradient(to bottom, #ffffff, #fafbfc); */
 }
@@ -78,7 +80,8 @@
   margin: 0;
   font-size: 1.3rem;
   font-weight: 500;
-  color: #0f172a;
+  /* color: #0f172a; */
+  color: white;
   letter-spacing: 0.05em;
 }
 
@@ -88,7 +91,7 @@
   border: none;
   padding: 0.5rem;
   cursor: pointer;
-  color: #64748b;
+  color: white;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -97,9 +100,10 @@
 }
 
 .closeButton:hover {
-  background-color: #f1f5f9;
-  color: #0f172a;
-  transform: scale(1.1);
+  /* background-color: #f1f5f9; */
+  /* color: #0f172a; */
+  font-weight: bold;
+  transform: scale(1.2);
 }
 
 .closeButton:active {
@@ -108,11 +112,22 @@
 
 /* 모달 바디 */
 .modalBody {
-  padding: 2rem;
+  padding: 1.2rem;
+  padding-top: 1.5rem;
   overflow-y: auto;
   flex: 1;
   color: #334155;
   line-height: 1.6;
+  border-radius: 12px;
+  background-color : white;
+  border-top-left-radius: 22px;
+  border-top-right-radius: 22px;
+}
+
+.modal_layer{
+  background-color: #673de6;
+  /* padding: 0px 0.2rem 0.2rem 0.2rem; */
+  border: 2px solid #673de6;
 }
 
 /* 스크롤바 스타일링 */

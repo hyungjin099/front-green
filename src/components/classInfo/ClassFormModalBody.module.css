@@ -3,6 +3,10 @@
   margin-bottom: 1rem;
 }
 
+.modal_container > div:last-child{
+  margin-bottom: 0rem;
+}
+
 .flex_row{
     display: flex;
     justify-content: space-between;

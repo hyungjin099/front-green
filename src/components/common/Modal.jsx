@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import styles from './Modal.module.css';
+import { MdLibraryAdd } from "react-icons/md";
 
 const Modal = ({ 
   isOpen, 
@@ -67,37 +68,49 @@ const Modal = ({
         className={`${styles.modalContent} ${styles[size]} ${isAnimating ? styles.show : ''}`}
         onClick={(e) => e.stopPropagation()}
       >
-        {/* 모달 헤더 */}
-        <div className={styles.modalHeader}>
-          {title && <h2 className={styles.modalTitle}>{title}</h2>}
-          {showCloseButton && (
-            <button 
-              className={styles.closeButton}
-              onClick={onClose}
-              aria-label="Close modal"
-            >
-              <svg 
-                width="20" 
-                height="20" 
-                viewBox="0 0 20 20" 
-                fill="none" 
-                xmlns="http://www.w3.org/2000/svg"
+        <div className={styles.modal_layer}>
+          {/* 모달 헤더 */}
+          <div className={styles.modalHeader}>
+            {title && 
+              <div style={{display:'inline-flex', gap:'0.5rem'}}>
+                <MdLibraryAdd style={{color:'white', fontSize : '24px'}}/>
+                <h2 className={styles.modalTitle}>
+                  {title}
+                </h2>
+              </div>
+            }
+            {showCloseButton && (
+              <button 
+                className={styles.closeButton}
+                onClick={onClose}
+                aria-label="Close modal"
               >
-                <path 
-                  d="M15 5L5 15M5 5L15 15" 
-                  stroke="currentColor" 
-                  strokeWidth="2" 
-                  strokeLinecap="round" 
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </button>
-          )}
-        </div>
+                <svg 
+                  width="20" 
+                  height="20" 
+                  viewBox="0 0 20 20" 
+                  fill="none" 
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path 
+                    d="M15 5L5 15M5 5L15 15" 
+                    stroke="currentColor" 
+                    strokeWidth="2" 
+                    strokeLinecap="round" 
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </button>
+            )}
 
-        {/* 모달 바디 */}
-        <div className={styles.modalBody}>
-          {children}
+
+            
+          </div>
+
+          {/* 모달 바디 */}
+          <div className={styles.modalBody}>
+            {children}
+          </div>
         </div>
       </div>
     </div>

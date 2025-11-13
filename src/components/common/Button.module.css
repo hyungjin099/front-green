@@ -1,0 +1,94 @@
+/* 기본 버튼 스타일 */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+  border: none;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  outline: none;
+  font-family: inherit;
+  letter-spacing: 0.1rem;
+}
+
+
+/* 색상 - Primary (메인 보라색) */
+.primary {
+  background-color: #673de6;
+  color: #ffffff;
+}
+
+.primary:hover {
+  background-color: #5633ba;
+  /* box-shadow: 0 4px 8px rgba(103, 61, 230, 0.3); */
+}
+
+.primary:focus {
+  /* box-shadow: 0 0 0 3px rgba(103, 61, 230, 0.25); */
+}
+
+/* 색상 - Secondary (회색) */
+.secondary {
+  background-color: #6c757d00;
+  color: #673de6;
+  border: 1px solid #dddddd;
+}
+
+.secondary:hover {
+  background-color: #eeeeee;
+
+}
+
+.secondary:focus {
+  box-shadow: 0 0 0 3px rgba(108, 117, 125, 0.25);
+}
+
+/* 색상 - Danger (빨간색) */
+.danger {
+  background-color: #dc3545;
+  color: #ffffff;
+}
+
+.danger:hover {
+  background-color: #c82333;
+  box-shadow: 0 4px 8px rgba(220, 53, 69, 0.3);
+}
+
+.danger:focus {
+  box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.25);
+}
+
+/* 크기 - Small */
+.small {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+/* 크기 - Medium */
+.medium {
+  padding: 0.6rem 1.7rem;
+  font-size: 0.95rem;
+  line-height: 1;
+}
+
+/* 크기 - Large */
+.large {
+  padding: 1rem 2rem;
+  font-size: 1.125rem;
+  line-height: 1.5;
+}
+
+/* Disabled 상태 */
+.disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.disabled:hover {
+  transform: none;
+  box-shadow: none;
+}

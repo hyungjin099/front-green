@@ -5,6 +5,11 @@ import Input from '../common/Input'
 import Textarea from '../common/Textarea'
 import Checkbox from '../common/Checkbox'
 import BtnCheckbox from '../common/BtnCheckbox'
+import DatePicker from '../common/DatePicker'
+import Button from '../common/Button'
+// import Flatpickr from "react-flatpickr";
+// import "flatpickr/dist/themes/material_orange.css"
+// import { Korean } from "flatpickr/dist/l10n/ko.js";
 
 const ClassFormModalBody = () => {
   const [chkList, setChkList] = useState([]);
@@ -25,9 +30,9 @@ const ClassFormModalBody = () => {
       <div className={styles.flex_row}>
         <Select label='직종'>
           <option value="">선택하세요.</option>
-          <option value="">응용SW엔지니어링</option>
-          <option value="">광고컨텐츠제작</option>
-          <option value="">편집디자인</option>
+          <option value="1">응용SW엔지니어링</option>
+          <option value="2">광고컨텐츠제작</option>
+          <option value="3">편집디자인</option>
         </Select>
         <Select label='과정 유형'>
           <option value="">선택하세요.</option>
@@ -47,8 +52,19 @@ const ClassFormModalBody = () => {
       </div>
       <div className={styles.flex_row}>
         <Input label='수업일수'/>
-        <Input label='시작일' type='date'/>
-        <Input label='종료일' type='date'/>
+        {/* <Input label='시작일' type='date'/>
+        <Input label='종료일' type='date'/> */}
+        <DatePicker 
+          label="날짜 + 시간"
+            value={null}
+            onChange={(date) => console.log(date)}
+            options={{
+              //enableTime: true,
+              //dateFormat: 'Y-m-d H:i',
+              //time_24hr: true
+            }}
+        />
+      
       </div>
       <div className={styles.flex_row}>
         <Input label='모집정원'/>
@@ -115,6 +131,14 @@ const ClassFormModalBody = () => {
       </div>
       <div>
         <Textarea label='비고' rows={5}/>
+      </div>
+      <div style={{
+        display:'flex',
+        justifyContent : 'end',
+        gap:'0.7rem'
+      }}>
+        <Button variant='secondary'>취소</Button>
+        <Button>등록</Button>
       </div>
     </div>
   )
