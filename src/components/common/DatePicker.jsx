@@ -4,6 +4,7 @@ import "flatpickr/dist/themes/material_orange.css"
 import { Korean } from "flatpickr/dist/l10n/ko.js";
 import styles from './DatePicker.module.css'
 import { FaCalendar } from "react-icons/fa6";
+import { formatDateToString } from "../../util/dateUtil";
 // options={{ 
 //   disable: [
 //     (date) => date.getDay() === 0 || date.getDay() === 6
@@ -35,7 +36,7 @@ const DatePicker = ({
       onChange({
         target: {
           name,
-          value: selectedDates[0] // Date 객체
+          value: formatDateToString(selectedDates[0]) // Date 객체
         }
       });
     }

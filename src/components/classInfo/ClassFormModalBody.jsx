@@ -16,7 +16,7 @@ import { insertClassInfo } from '../../apis/classInfoApis'
 // import "flatpickr/dist/themes/material_orange.css"
 // import { Korean } from "flatpickr/dist/l10n/ko.js";
 
-const ClassFormModalBody = () => {
+const ClassFormModalBody = ({onClose}) => {
   //직종 목록 저장 변수
   const [jobTypeList, setJobTypeList] = useState([]);
 
@@ -235,7 +235,7 @@ const ClassFormModalBody = () => {
         justifyContent : 'end',
         gap:'0.7rem'
       }}>
-        <Button variant='secondary'>취소</Button>
+        <Button variant='secondary' onClick={e => onClose()}>취소</Button>
         <Button onClick={e => saveClassInfo()}>등록</Button>
       </div>
     </div>

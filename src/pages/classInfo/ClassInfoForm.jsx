@@ -8,16 +8,13 @@ import Checkbox from '../../components/common/Checkbox'
 import Radio from '../../components/common/Radio'
 import Modal from '../../components/common/Modal'
 import ClassFormModalBody from '../../components/classInfo/ClassFormModalBody'
-import { selectJobTypeList } from '../../apis/jobTypeApis'
-
+import { toast } from 'react-toastify';
 
 const ClassInfoForm = () => {
 
 
   //과정 등록 모달 오픈 여부
   const [isOpen, setIsOpen] = useState(false);
-
-
 
   //과정 등록 모달 오픈 함수
   const openModal = (size = 'medium') => {
@@ -109,7 +106,7 @@ const ClassInfoForm = () => {
         title="신규 과정 등록"
         size='medium'
       >
-        <ClassFormModalBody />
+        <ClassFormModalBody onClose={closeModal}/>
       </Modal>
 
         

@@ -1,0 +1,28 @@
+@font-face {
+    font-family: 'Escoredream';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-1Thin.woff') format('woff');
+    font-weight: 100;
+    font-display: swap;
+}
+
+@font-face {
+  font-family: 'Nasensitivity';
+  src: url('fonts/Nasensitivity.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* 토스트 박스 기본 스타일 */
+.Toastify__toast {
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  font-size: 20px;
+  min-height: 60px;
+}
+
+/* 성공 토스트 */
+.Toastify__toast--success {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+width: 700px !important;
+}
