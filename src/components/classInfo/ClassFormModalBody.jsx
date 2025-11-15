@@ -12,6 +12,7 @@ import { selectClassTypeList } from '../../apis/classTypeApis'
 import { selectClassRoomList } from '../../apis/classRoomApis'
 import { selectTeacherList } from '../../apis/staffApis'
 import { insertClassInfo } from '../../apis/classInfoApis'
+import { toast } from 'react-toastify';
 // import Flatpickr from "react-flatpickr";
 // import "flatpickr/dist/themes/material_orange.css"
 // import { Korean } from "flatpickr/dist/l10n/ko.js";
@@ -47,6 +48,8 @@ const ClassFormModalBody = ({onClose}) => {
     classComment : ''
   });
 
+
+
   console.log(inputData)
 
   useEffect(() => {
@@ -56,20 +59,18 @@ const ClassFormModalBody = ({onClose}) => {
 
   //초기 목록 조회 함수
   const getInitDataList = async () => {
-    const response1 = await selectJobTypeList();
-    console.log(response1.data)
+    // Promise.all로 병렬 처리
+    const [response1, response2, response3, response4] = await Promise.all([
+      selectJobTypeList(),
+      selectClassTypeList(),
+      selectClassRoomList(),
+      selectTeacherList()
+    ]);
+
+    // React 18에서는 자동으로 배치 처리됨 (1번만 리렌더링)
     setJobTypeList(response1.data);
-
-    const response2 = await selectClassTypeList();
-    console.log(response2.data)
     setClassTypeList(response2.data);
-
-    const response3 = await selectClassRoomList();
-    console.log(response3.data)
     setClassRoomList(response3.data);
-
-    const response4 = await selectTeacherList();
-    console.log(response4.data)
     setTeacherList(response4.data);
   }
 
@@ -91,7 +92,32 @@ const ClassFormModalBody = ({onClose}) => {
 
   //과정 등록 함수
   const saveClassInfo = async () => {
-    await insertClassInfo(inputData);
+    await toast.promise(
+      insertClassInfo(inputData), // Promise 함수
+      {
+        pending: '과정 정보 등록 중... ⏳',
+        success: '신규 과정이 등록되었습니다! 👌',
+        error: '헐..등록 실패... 😞'
+      },
+      {containerId: 'topRight'}
+    );
+
+    setInputData({
+    jobNum : '',
+    classTypeNum : '',
+    classRoomNum : '',
+    className : '',
+    classQuota : '',
+    totalStudyDay : '',
+    studyHour : '',
+    startDate :'',
+    endDate : '',
+    staffNum : '',
+    startTime : '',
+    endTime : '',
+    studyDay : [],
+    classComment : ''
+  });
   }
     
 

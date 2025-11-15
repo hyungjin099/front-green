@@ -13,7 +13,9 @@ import { toast } from 'react-toastify';
 //npm run electron-dev
 function App() {
   const handleSuccess = () => {
-    toast.success('성공했습니다! 🎉');
+    toast.success('성공했습니다!', {
+      containerId: 'A'
+    });
   };
 
   const handleError = () => {
@@ -50,9 +52,10 @@ function App() {
       </div>
 
       <ToastContainer
+        containerId={'topRight'}
         position="top-right"
-        autoClose={10000}
-        hideProgressBar={false}
+        autoClose={2000}
+        hideProgressBar={true}
         newestOnTop={false}
         closeOnClick
         rtl={false}
@@ -61,10 +64,27 @@ function App() {
         pauseOnHover
         theme="light"
         transition={Bounce}
-        // style={{
-        //   width: '600px',
-        //   fontFamily: 'Montserrat, Nasensitivity'
+        //style={{
+        //   top: '50%',
+        //   left: '50%',
+        //   transform: 'translate(-50%, -50%)',
+        //   width: '300px'
         // }}
+      />
+
+      <ToastContainer
+        containerId={'B'}
+        position="bottom-right"
+        autoClose={3000}
+        hideProgressBar={true}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        transition={Slide}
       />
 
       <div>

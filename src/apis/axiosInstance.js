@@ -10,6 +10,24 @@ const api = axios.create({
   },
 });
 
+api.interceptors.request.use(
+  (config) => {
+    return config;
+  },
+  (error) => {
+    console.error('❌ 요청 오류:', error);
+    return Promise.reject(error);
+  }
+);
 
+api.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error) => {
+    console.error('API 오류:', error.response?.status, error.config?.url);
+    return Promise.reject(error);
+  }
+);
 
 export default api;
