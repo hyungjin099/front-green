@@ -6,7 +6,7 @@ const isDev = !app.isPackaged;
 
 function createWindow() {
   const win = new BrowserWindow({
-    width: 1600,
+    width: 1650,
     height: 1000,
     title : '교육원 관리 시스템',
     webPreferences: {

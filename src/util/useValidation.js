@@ -38,6 +38,18 @@ export const useValidation = (initialValues = {}) => {
     return true;
   };
 
+  const validateAllFields = (getValidationRules) => {
+    let isValid = true;
+    Object.keys(values).forEach(fieldName => {
+      setTouchedField(fieldName);
+      const rules = getValidationRules(fieldName); // 함수 호출로 변경
+      if (rules && !validateField(fieldName, values[fieldName], rules)) {
+        isValid = false;
+      }
+    });
+    return isValid;
+  };
+
   return {
     values,
     errors,
@@ -46,6 +58,7 @@ export const useValidation = (initialValues = {}) => {
     setError,
     setTouchedField,
     validateField,
+    validateAllFields,
     clearError
   };
 };

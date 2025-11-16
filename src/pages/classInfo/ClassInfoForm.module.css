@@ -1,8 +1,21 @@
 .container {
-  width: 100%;
- 
+  width: 100%; 
 }
 
-.test{
+.container > div{
+  margin-bottom: 1rem;
+}
+
+.class_reg_div{
   display: flex;
+  gap: 1rem;
+}
+
+.list_title{
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.top_caption{
+  font-style: italic;
 }

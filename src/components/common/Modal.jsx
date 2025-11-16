@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react';
 import styles from './Modal.module.css';
 import { MdLibraryAdd } from "react-icons/md";
+import { IoCheckmarkCircleOutline , IoAlertCircleOutline  } from "react-icons/io5";
+import { FaCalculator } from "react-icons/fa";
 
 const Modal = ({ 
   isOpen, 
@@ -8,6 +10,7 @@ const Modal = ({
   title, 
   children, 
   size = 'medium',
+  iconType,
   showCloseButton = true 
 }) => {
   const [isAnimating, setIsAnimating] = useState(false);
@@ -73,7 +76,12 @@ const Modal = ({
           <div className={styles.modalHeader}>
             {title && 
               <div style={{display:'inline-flex', gap:'0.5rem'}}>
-                <MdLibraryAdd style={{color:'white', fontSize : '24px'}}/>
+                {
+                  iconType === 'add' ? <MdLibraryAdd style={{color:'white', fontSize : '24px'}}/> :
+                  iconType === 'calc' ? <FaCalculator style={{color:'white', fontSize : '24px'}}/> :
+                  null
+                }
+                
                 <h2 className={styles.modalTitle}>
                   {title}
                 </h2>

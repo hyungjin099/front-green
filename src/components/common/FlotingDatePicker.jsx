@@ -1,23 +1,23 @@
-// components/BasicDatePicker.jsx
+// components/DatePicker.jsx
 import React from 'react';
 import Flatpickr from 'react-flatpickr';
 import "flatpickr/dist/themes/material_orange.css"
 import { Korean } from "flatpickr/dist/l10n/ko.js";
-import styles from './DatePicker.module.css'
+import styles from './FlotingDatePicker.module.css'
 import { FaCalendar } from "react-icons/fa6";
 import { formatDateToString } from "../../util/dateUtil";
-import { IoCheckmarkCircleOutline, IoAlertCircleOutline } from "react-icons/io5";
+import { IoCheckmarkCircleOutline , IoAlertCircleOutline  } from "react-icons/io5";
 
-const DatePicker = ({ 
-  label,
+const FlotingDatePicker = ({ 
+  label = '날짜',
   options = {},
   name, 
   value,
   onChange,
+  //onBlur,
   error,
   touched,
   isValid,
-  required,
   ...props 
 }) => {
 
@@ -54,38 +54,43 @@ const DatePicker = ({
     return className;
   };
 
+  const getLabelClass = () => {
+    let className = styles.label;
+    
+    if (touched && error) {
+      className += ` ${styles.labelError}`;
+    } else if (touched && isValid) {
+      className += ` ${styles.labelValid}`;
+    }
+    
+    return className;
+  };
+
   return (
     <div className={styles.inputGroup}>
-      {label && (
-        <label htmlFor={name} className={styles.label}>
-          {label}
-          {required && <span className={styles.required}>*</span>}
-        </label>
-      )}
+      <Flatpickr
+        options={defaultOptions}
+        value={value}
+        onChange={handleChange}
+        //onBlur={onBlur}
+        placeholder=" "
+        className={getInputClass()}
+        {...props}
+      />
+      <label className={getLabelClass()}>{label}</label>
+      <FaCalendar className={styles.calendarIcon}/>
       
-      <div className={styles.inputWrapper}>
-        <FaCalendar className={styles.calendarIcon}/>
-        
-        <Flatpickr
-          id={name}
-          options={defaultOptions}
-          value={value}
-          onChange={handleChange}
-          className={getInputClass()}
-          {...props}
-        />
-        
-        {/* 성공/에러 아이콘 */}
-        {touched && (error || isValid) && (
-          <div className={styles.validationIcon}>
-            {error ? (
-              <IoAlertCircleOutline className={styles.errorIcon}/>
-            ) : isValid ? (
-              <IoCheckmarkCircleOutline className={styles.successIcon}/>
-            ) : null}
-          </div>
-        )}
-      </div>
+      {/* 성공/에러 아이콘 */}
+      {touched && (
+        <div className={styles.validationIcon}>
+          {error ? (
+            <IoAlertCircleOutline className={styles.errorIcon}/>
+          ) : isValid ? (
+            
+            <IoCheckmarkCircleOutline className={styles.successIcon}/>
+          ) : null}
+        </div>
+      )}
       
       {/* 에러 메시지 */}
       {touched && error && (
@@ -95,4 +100,4 @@ const DatePicker = ({
   )
 }
 
-export default DatePicker
+export default FlotingDatePicker

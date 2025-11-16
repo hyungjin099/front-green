@@ -47,53 +47,53 @@ const Side = () => {
       <div className={styles.sidebarContent}>
         <nav className={styles.sidebarNav}>
           <div className={styles.navSection}>
-            <h3>학생 관리</h3>
+            <h3>과정 관리</h3>
             <ul>
               <li>
                 <a 
                   href="#students" 
                   className={styles.active}
-                  onMouseEnter={(e) => handleMouseEnter(e, '학생 목록')}
+                  onMouseEnter={(e) => handleMouseEnter(e, '신규 과정 관리')}
                   onMouseLeave={handleMouseLeave}
                 >
                   <HiUsers className={styles.navIcon} />
-                  <span>학생 목록</span>
+                  <span>신규 과정 관리</span>
                 </a>
               </li>
               <li>
                 <a 
                   href="#enrollment"
-                  onMouseEnter={(e) => handleMouseEnter(e, '수강 신청')}
+                  onMouseEnter={(e) => handleMouseEnter(e, '운영 과정 관리')}
                   onMouseLeave={handleMouseLeave}
                 >
                   <HiClipboardList className={styles.navIcon} />
-                  <span>수강 신청</span>
+                  <span>운영 과정 관리</span>
                 </a>
               </li>
               <li>
                 <a 
                   href="#student-info"
-                  onMouseEnter={(e) => handleMouseEnter(e, '학생 정보')}
+                  onMouseEnter={(e) => handleMouseEnter(e, '전체 과정 조회')}
                   onMouseLeave={handleMouseLeave}
                 >
                   <HiInformationCircle className={styles.navIcon} />
-                  <span>학생 정보</span>
+                  <span>전체 과정 조회</span>
                 </a>
               </li>
             </ul>
           </div>
 
           <div className={styles.navSection}>
-            <h3>출결 관리</h3>
+            <h3>훈련생 관리</h3>
             <ul>
               <li>
                 <a 
                   href="#attendance"
-                  onMouseEnter={(e) => handleMouseEnter(e, '출석 체크')}
+                  onMouseEnter={(e) => handleMouseEnter(e, '훈련생 등록')}
                   onMouseLeave={handleMouseLeave}
                 >
                   <HiCheckCircle className={styles.navIcon} />
-                  <span>출석 체크</span>
+                  <span>훈련생 등록</span>
                 </a>
               </li>
               <li>

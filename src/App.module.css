@@ -2,7 +2,8 @@
   display: flex;
   flex-direction: column;
   height: 100vh;
-  background-color: #f9fafd; 
+  /* background-color: #f9fafd;  */
+  min-height: 900px;
 }
 
 /* 레이아웃 바디 */
