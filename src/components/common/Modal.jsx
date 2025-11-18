@@ -3,6 +3,7 @@ import styles from './Modal.module.css';
 import { MdLibraryAdd } from "react-icons/md";
 import { IoCheckmarkCircleOutline , IoAlertCircleOutline  } from "react-icons/io5";
 import { FaCalculator } from "react-icons/fa";
+import { BiSolidUserPlus } from "react-icons/bi";
 
 const Modal = ({ 
   isOpen, 
@@ -79,6 +80,7 @@ const Modal = ({
                 {
                   iconType === 'add' ? <MdLibraryAdd style={{color:'white', fontSize : '24px'}}/> :
                   iconType === 'calc' ? <FaCalculator style={{color:'white', fontSize : '24px'}}/> :
+                  iconType === 'add-user' ? <BiSolidUserPlus style={{color:'white', fontSize : '26px'}}/> :
                   null
                 }
                 

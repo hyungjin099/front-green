@@ -1,0 +1,40 @@
+
+.modal_container > div{
+  margin-bottom: 1rem;
+}
+
+.modal_container > div:last-child{
+  margin-bottom: 0rem;
+}
+
+.flex_row{
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.flex_row_start{
+  display: flex;
+  justify-content: start;
+  gap: 10px;
+  align-items: center;
+}
+
+.flex_row > div {
+  width: 50%;
+}
+.flex_row > button {
+  width: 22%;
+}
+
+.week_p{
+  margin-bottom: 0.25rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: rgb(100, 100, 100);
+}
+
+.week_div{
+  display: inline-flex;
+  gap: 0.5rem;;
+}

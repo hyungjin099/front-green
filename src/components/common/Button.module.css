@@ -25,6 +25,17 @@
   /* box-shadow: 0 4px 8px rgba(103, 61, 230, 0.3); */
 }
 
+/* 색상 - Primary (메인 보라색) */
+.success {
+  background-color: #57b63f;
+  color: #ffffff;
+}
+
+.success:hover {
+  background-color: #4fa73a;
+  /* box-shadow: 0 4px 8px rgba(103, 61, 230, 0.3); */
+}
+
 /* 색상 -*/
 .cancel {
   background-color: #6c757d00;

@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { NavLink } from 'react-router-dom'
 import styles from './Side.module.css'
 import { 
   HiUsers, 
@@ -19,7 +20,7 @@ import {
 
 const Side = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-    const [tooltip, setTooltip] = useState({ show: false, text: '', top: 0, left: 0 });
+  const [tooltip, setTooltip] = useState({ show: false, text: '', top: 0, left: 0 });
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -47,38 +48,40 @@ const Side = () => {
       <div className={styles.sidebarContent}>
         <nav className={styles.sidebarNav}>
           <div className={styles.navSection}>
-            <h3>과정 관리</h3>
+            <h3>훈련 준비 업무</h3>
             <ul>
               <li>
-                <a 
-                  href="#students" 
-                  className={styles.active}
-                  onMouseEnter={(e) => handleMouseEnter(e, '신규 과정 관리')}
+                <NavLink 
+                  to="/new-class-manage"
+                  className={({ isActive }) => isActive ? styles.active : ''}
+                  onMouseEnter={(e) => handleMouseEnter(e, '모집 훈련 관리')}
                   onMouseLeave={handleMouseLeave}
                 >
                   <HiUsers className={styles.navIcon} />
-                  <span>신규 과정 관리</span>
-                </a>
+                  <span>모집 훈련 관리</span>
+                </NavLink>
               </li>
-              <li>
-                <a 
-                  href="#enrollment"
-                  onMouseEnter={(e) => handleMouseEnter(e, '운영 과정 관리')}
-                  onMouseLeave={handleMouseLeave}
-                >
-                  <HiClipboardList className={styles.navIcon} />
-                  <span>운영 과정 관리</span>
-                </a>
-              </li>
-              <li>
-                <a 
-                  href="#student-info"
-                  onMouseEnter={(e) => handleMouseEnter(e, '전체 과정 조회')}
+               <li>
+                <NavLink 
+                  to="/enroll-consult"
+                  className={({ isActive }) => isActive ? styles.active : ''}
+                  onMouseEnter={(e) => handleMouseEnter(e, '훈련 등록 상담')}
                   onMouseLeave={handleMouseLeave}
                 >
                   <HiInformationCircle className={styles.navIcon} />
-                  <span>전체 과정 조회</span>
-                </a>
+                  <span>훈련 등록 상담</span>
+                </NavLink>
+              </li>
+              <li>
+                <NavLink 
+                  to="/stu-manage"
+                  className={({ isActive }) => isActive ? styles.active : ''}
+                  onMouseEnter={(e) => handleMouseEnter(e, '훈련생 관리')}
+                  onMouseLeave={handleMouseLeave}
+                >
+                  <HiClipboardList className={styles.navIcon} />
+                  <span>훈련생 관리</span>
+                </NavLink>
               </li>
             </ul>
           </div>
@@ -87,24 +90,26 @@ const Side = () => {
             <h3>훈련생 관리</h3>
             <ul>
               <li>
-                <a 
-                  href="#attendance"
+                <NavLink 
+                  to="/attendance"
+                  className={({ isActive }) => isActive ? styles.active : ''}
                   onMouseEnter={(e) => handleMouseEnter(e, '훈련생 등록')}
                   onMouseLeave={handleMouseLeave}
                 >
                   <HiCheckCircle className={styles.navIcon} />
                   <span>훈련생 등록</span>
-                </a>
+                </NavLink>
               </li>
               <li>
-                <a 
-                  href="#attendance-stats"
+                <NavLink 
+                  to="/attendance-stats"
+                  className={({ isActive }) => isActive ? styles.active : ''}
                   onMouseEnter={(e) => handleMouseEnter(e, '출결 통계')}
                   onMouseLeave={handleMouseLeave}
                 >
                   <HiChartBar className={styles.navIcon} />
                   <span>출결 통계</span>
-                </a>
+                </NavLink>
               </li>
             </ul>
           </div>
@@ -113,34 +118,37 @@ const Side = () => {
             <h3>수업 관리</h3>
             <ul>
               <li>
-                <a 
-                  href="#courses"
+                <NavLink 
+                  to="/courses"
+                  className={({ isActive }) => isActive ? styles.active : ''}
                   onMouseEnter={(e) => handleMouseEnter(e, '과정 관리')}
                   onMouseLeave={handleMouseLeave}
                 >
                   <HiBookOpen className={styles.navIcon} />
                   <span>과정 관리</span>
-                </a>
+                </NavLink>
               </li>
               <li>
-                <a 
-                  href="#schedule"
+                <NavLink 
+                  to="/schedule"
+                  className={({ isActive }) => isActive ? styles.active : ''}
                   onMouseEnter={(e) => handleMouseEnter(e, '시간표')}
                   onMouseLeave={handleMouseLeave}
                 >
                   <HiCalendar className={styles.navIcon} />
                   <span>시간표</span>
-                </a>
+                </NavLink>
               </li>
               <li>
-                <a 
-                  href="#curriculum"
+                <NavLink 
+                  to="/curriculum"
+                  className={({ isActive }) => isActive ? styles.active : ''}
                   onMouseEnter={(e) => handleMouseEnter(e, '커리큘럼')}
                   onMouseLeave={handleMouseLeave}
                 >
                   <HiAcademicCap className={styles.navIcon} />
                   <span>커리큘럼</span>
-                </a>
+                </NavLink>
               </li>
             </ul>
           </div>
@@ -149,24 +157,26 @@ const Side = () => {
             <h3>평가 관리</h3>
             <ul>
               <li>
-                <a 
-                  href="#exams"
+                <NavLink 
+                  to="/exams"
+                  className={({ isActive }) => isActive ? styles.active : ''}
                   onMouseEnter={(e) => handleMouseEnter(e, '시험 관리')}
                   onMouseLeave={handleMouseLeave}
                 >
                   <HiDocumentText className={styles.navIcon} />
                   <span>시험 관리</span>
-                </a>
+                </NavLink>
               </li>
               <li>
-                <a 
-                  href="#grades"
+                <NavLink 
+                  to="/grades"
+                  className={({ isActive }) => isActive ? styles.active : ''}
                   onMouseEnter={(e) => handleMouseEnter(e, '성적 관리')}
                   onMouseLeave={handleMouseLeave}
                 >
                   <HiStar className={styles.navIcon} />
                   <span>성적 관리</span>
-                </a>
+                </NavLink>
               </li>
             </ul>
           </div>
@@ -175,24 +185,26 @@ const Side = () => {
             <h3>설정</h3>
             <ul>
               <li>
-                <a 
-                  href="#settings"
+                <NavLink 
+                  to="/settings"
+                  className={({ isActive }) => isActive ? styles.active : ''}
                   onMouseEnter={(e) => handleMouseEnter(e, '시스템 설정')}
                   onMouseLeave={handleMouseLeave}
                 >
                   <HiCog className={styles.navIcon} />
                   <span>시스템 설정</span>
-                </a>
+                </NavLink>
               </li>
               <li>
-                <a 
-                  href="#users"
+                <NavLink 
+                  to="/users"
+                  className={({ isActive }) => isActive ? styles.active : ''}
                   onMouseEnter={(e) => handleMouseEnter(e, '사용자 관리')}
                   onMouseLeave={handleMouseLeave}
                 >
                   <HiUser className={styles.navIcon} />
                   <span>사용자 관리</span>
-                </a>
+                </NavLink>
               </li>
             </ul>
           </div>
