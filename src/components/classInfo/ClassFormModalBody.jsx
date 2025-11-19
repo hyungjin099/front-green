@@ -10,7 +10,7 @@ import FlotingTextarea from '../common/FlotingTextarea'
 import { selectJobTypeList } from '../../apis/jobTypeApis'
 import { selectClassTypeList } from '../../apis/classTypeApis'
 import { selectClassRoomList } from '../../apis/classRoomApis'
-import { selectTeacherList } from '../../apis/staffApis'
+import { selectStaffList } from '../../apis/staffApis'
 import { insertClassInfo } from '../../apis/classInfoApis'
 import { toast } from 'react-toastify';
 import { useValidation } from '../../util/useValidation';
@@ -57,7 +57,7 @@ const ClassFormModalBody = ({ onClose, getClassListRecruiting }) => {
       selectJobTypeList(),
       selectClassTypeList(),
       selectClassRoomList(),
-      selectTeacherList()
+      selectStaffList('강사')
     ]);
 
     setJobTypeList(response1.data);

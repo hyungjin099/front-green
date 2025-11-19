@@ -38,3 +38,16 @@ export const positiveNumber = (message = '양수만 입력 가능합니다.') =>
   }
   return null;
 };
+
+export const phoneNumber = (message = '010-1234-5678 형식으로 입력해주세요.') => (value) => {
+  if (!value) return null;
+  
+  // 010-xxxx-xxxx 또는 01x-xxx-xxxx 형식
+  const phoneRegex = /^(010-\d{4}-\d{4}|01[1|6|7|8|9]-\d{3}-\d{4})$/;
+  
+  if (!phoneRegex.test(value)) {
+    return message;
+  }
+  
+  return null;
+};

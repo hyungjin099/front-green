@@ -4,6 +4,10 @@ import { MdLibraryAdd } from "react-icons/md";
 import { IoCheckmarkCircleOutline , IoAlertCircleOutline  } from "react-icons/io5";
 import { FaCalculator } from "react-icons/fa";
 import { BiSolidUserPlus } from "react-icons/bi";
+import { createPortal } from 'react-dom';
+
+// 모달 스택 관리를 위한 전역 변수
+let modalStack = [];
 
 const Modal = ({ 
   isOpen, 
@@ -18,17 +22,31 @@ const Modal = ({
   const [shouldRender, setShouldRender] = useState(false);
   const timeoutRef = useRef(null);
 
+  const modalIdRef = useRef(Symbol('modal')); // 각 모달 인스턴스의 고유 ID
+  const [zIndex, setZIndex] = useState(1000);
+
   // 모달 열기/닫기 애니메이션 처리
   useEffect(() => {
     if (isOpen) {
       setShouldRender(true);
       // 브라우저가 렌더링을 완료한 후 애니메이션 시작
+
+
+      // 모달 스택에 추가
+      modalStack.push(modalIdRef.current);
+      setZIndex(1000 + (modalStack.length - 1) * 10);
+
+
       const timer = setTimeout(() => {
         setIsAnimating(true);
       }, 10);
       return () => clearTimeout(timer);
     } else {
       setIsAnimating(false);
+
+      // 모달 스택에서 제거
+      modalStack = modalStack.filter(id => id !== modalIdRef.current);
+
       // 애니메이션 후 언마운트
       timeoutRef.current = setTimeout(() => {
         setShouldRender(false);
@@ -46,7 +64,11 @@ const Modal = ({
   useEffect(() => {
     const handleEscape = (e) => {
       if (e.key === 'Escape' && isOpen) {
-        onClose();
+        // 현재 모달이 스택의 최상위에 있을 때만 닫기
+        const topModal = modalStack[modalStack.length - 1];
+        if (topModal === modalIdRef.current) {
+          onClose();
+        }
       }
     };
 
@@ -57,16 +79,22 @@ const Modal = ({
 
     return () => {
       document.removeEventListener('keydown', handleEscape);
-      document.body.style.overflow = 'unset';
+       // 모든 모달이 닫혔을 때만 스크롤 복원
+      if (modalStack.length === 1) {
+        document.body.style.overflow = 'unset';
+      }
     };
   }, [isOpen, onClose]);
 
   if (!shouldRender) return null;
 
-  return (
+  // return (
+  const modalContent = (
     <div 
       className={`${styles.modalOverlay} ${isAnimating ? styles.show : ''}`}
-      onClick={onClose}
+      style={{ zIndex }} // 동적 z-index 적용
+
+      // onClick={onClose}
     >
       <div 
         className={`${styles.modalContent} ${styles[size]} ${isAnimating ? styles.show : ''}`}
@@ -112,9 +140,6 @@ const Modal = ({
                 </svg>
               </button>
             )}
-
-
-            
           </div>
 
           {/* 모달 바디 */}
@@ -125,6 +150,9 @@ const Modal = ({
       </div>
     </div>
   );
+
+// return 부분
+return createPortal(modalContent, document.body);
 };
 
 export default Modal;

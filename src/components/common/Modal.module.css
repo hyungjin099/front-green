@@ -1,6 +1,6 @@
 /* 오버레이 */
 .modalOverlay {
-position: fixed;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
@@ -35,7 +35,6 @@ position: fixed;
   transform: translateY(-50px);
   transition: opacity 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), 
               transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-
 }
 
 .modalContent.show {
@@ -61,7 +60,6 @@ position: fixed;
 
 .xlarge {
   width: 100%;
-  /* width: 800px; */
   max-width: 900px;
 }
 
@@ -71,17 +69,12 @@ position: fixed;
   justify-content: space-between;
   align-items: center;
   padding: 0.3rem 1rem 0.3rem 1rem;
-  
-  
-  /* border-bottom: 1px solid #e2e8f0; */
-  /* background: linear-gradient(to bottom, #ffffff, #fafbfc); */
 }
 
 .modalTitle {
   margin: 0;
   font-size: 1.3rem;
   font-weight: 500;
-  /* color: #0f172a; */
   color: white;
   letter-spacing: 0.05em;
 }
@@ -101,8 +94,6 @@ position: fixed;
 }
 
 .closeButton:hover {
-  /* background-color: #f1f5f9; */
-  /* color: #0f172a; */
   font-weight: bold;
   transform: scale(1.2);
 }
@@ -120,14 +111,13 @@ position: fixed;
   color: #334155;
   line-height: 1.6;
   border-radius: 12px;
-  background-color : white;
+  background-color: white;
   border-top-left-radius: 22px;
   border-top-right-radius: 22px;
 }
 
-.modal_layer{
+.modal_layer {
   background-color: #673de6;
-  /* padding: 0px 0.2rem 0.2rem 0.2rem; */
   border: 2px solid #673de6;
 }
 
