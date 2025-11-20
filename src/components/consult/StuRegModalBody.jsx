@@ -64,6 +64,8 @@ const ClassFormModalBody = ({ onClose }) => {
     isDuplicate : 'N'
   });
 
+  console.log(inputData)
+
   useEffect(() => {
     getInitDataList();
   }, []);
@@ -147,37 +149,6 @@ const ClassFormModalBody = ({ onClose }) => {
     return fieldValue?.trim() !== '';
   };
 
-  const saveClassInfo = async () => {
-    // 모든 필드 validation
-    const isValid = validateAllFields(getValidationRules);
-
-    if (!isValid) {
-      toast.error('입력 정보를 확인해주세요.', { containerId: 'topRight' });
-      return;
-    }
-
-    await toast.promise(
-      insertClassInfo(inputData),
-      {
-        pending: '과정 정보 등록 중... ⏳',
-        success: '신규 과정이 등록되었습니다! 👌',
-        error: '헐..등록 실패... '
-      },
-      { containerId: 'topRight' }
-    );
-
-    // 성공시 폼 초기화 및 목록 조회
-    await getClassListRecruiting();
-
-    Object.keys(inputData).forEach(key => {
-      if (key === 'studyDay') {
-        setValue(key, []);
-      } else {
-        setValue(key, '');
-      }
-    });
-  }
-
   //이력 확인 버튼 클릭 시 기등록 학생 확인 함수
   const checkDuplicate = async() => {
     if(inputData.stuName.trim() === '' || inputData.stuBirthday.trim() === ''){
@@ -196,7 +167,7 @@ const ClassFormModalBody = ({ onClose }) => {
 
     //상담, 수강 이력이 없다면...
     if(response1.data.length === 0 && response2.data.length === 0){
-      toast.info('미등록 훈련생입니다. 👌', { containerId: 'center' });
+      toast.info('미등록 훈련생입니다. 👌', { containerId: 'topRight' });
       setBtnDisable(false);
       return ;
     }
@@ -211,15 +182,57 @@ const ClassFormModalBody = ({ onClose }) => {
 
   //등록버튼 클릭 시 신규 상담 등록
   const regConsult = async () => {
-    await insertNewConsult(inputData);
+    // 모든 필드 validation
+    const isValid = validateAllFields(getValidationRules);
+
+    if (!isValid) {
+      toast.error('입력 정보를 확인해주세요.', { containerId: 'topRight' });
+      return;
+    }
+
+    await toast.promise(
+      insertNewConsult(inputData),
+      {
+        pending: '훈련생 정보 등록 중... ⏳',
+        success: '훈련생이 등록되었습니다! 👌',
+        error: '헐..등록 실패... '
+      },
+      { containerId: 'topRight' }
+    );
+
+    onClose();
+    // Object.keys(inputData).forEach(key => {
+    //   if (key === 'isDuplicate') {
+    //     setValue(key, 'N');
+    //   } else {
+    //     setValue(key, '');
+    //   }
+    // });
+
   }
 
   return (
     <div className={styles.modal_container}>
       <div className={styles.flex_row}>
         <div style={{display:'flex', width:'50%', gap:'0.5rem'}}>
-          <BtnRadio name='isDuplicate' value='N' color='yellow' label='신규 훈련생' readOnly={true} checked={inputData.isDuplicate === 'N'}/>
-          <BtnRadio name='isDuplicate' value='Y'color='yellow' label='기존 훈련생' readOnly={true} checked={inputData.isDuplicate === 'Y'}/>
+          <BtnRadio 
+            name='isDuplicate' 
+            value='N' 
+            color='yellow' 
+            label='신규 훈련생' 
+            readOnly={true} 
+            checked={inputData.isDuplicate === 'N'}
+            onChange={handleInputData}
+          />
+          <BtnRadio 
+            name='isDuplicate' 
+            value='Y'
+            color='yellow' 
+            label='기존 훈련생' 
+            readOnly={true} 
+            checked={inputData.isDuplicate === 'Y'}
+            onChange={handleInputData}
+          />
         </div>
         <Button 
           variant='success' 
@@ -299,8 +312,6 @@ const ClassFormModalBody = ({ onClose }) => {
           ))}
         </FlotingSelect>
       </div>
-
-     
 
       <div style={{
         display: 'flex',
@@ -458,6 +469,17 @@ const ClassFormModalBody = ({ onClose }) => {
               }  
               </tbody>
             </ListTable>
+          </div>
+          <div style={{
+            display: 'flex',
+            justifyContent: 'center',
+            gap: '1rem'
+          }}>
+            <Button variant='success' onClick={() => setIsOpenHistoryModal(true)}>신규 훈련생으로 상담 등록</Button>
+            <Button variant='info' onClick={() => {
+              setValue({...inputData, isDuplicate : 'Y'});
+              setIsOpenHistoryModal(false);
+            }} >기존 훈련생으로 상담 등록</Button>
           </div>
         </div>
       </Modal>

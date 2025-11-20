@@ -25,7 +25,7 @@
   /* box-shadow: 0 4px 8px rgba(103, 61, 230, 0.3); */
 }
 
-/* 색상 - Primary (메인 보라색) */
+/* 색상 - 초록색 */
 .success {
   background-color: #57b63f;
   color: #ffffff;
@@ -36,16 +36,15 @@
   /* box-shadow: 0 4px 8px rgba(103, 61, 230, 0.3); */
 }
 
-/* 색상 -*/
-.cancel {
-  background-color: #6c757d00;
-  color: #673de6;
-  border: 1px solid #dddddd;
+/* 색상 - 파란색 */
+.info {
+  background-color: #4863fc;
+  color: #ffffff;
 }
 
-.cancel:hover {
-  background-color: #f5f5f5;
-
+.info:hover {
+  background-color: #3a53e0;
+  /* box-shadow: 0 4px 8px rgba(103, 61, 230, 0.3); */
 }
 
 /* 색상 - Secondary (회색) */
@@ -70,6 +69,20 @@
   background-color: #c82333;
   box-shadow: 0 4px 8px rgba(220, 53, 69, 0.3);
 }
+
+/* 색상 -*/
+.cancel {
+  background-color: #6c757d00;
+  color: #673de6;
+  border: 1px solid #dddddd;
+}
+
+.cancel:hover {
+  background-color: #f5f5f5;
+
+}
+
+
 
 
 

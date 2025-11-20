@@ -18,12 +18,12 @@ const EnrollConsult = () => {
   //훈련생 등록 모달 오픈 여부
   const [isOpenAddModal, setIsOpenAddModal] = useState(false);
 
-  //과정 등록 모달 오픈 함수
+  //훈련생 등록 모달 오픈 함수
   const openAddModal = (size = 'medium') => {
     setIsOpenAddModal(true);
   };
 
-  //과정 등록 모달 닫기 함수
+  //훈련생 등록 모달 닫기 함수
   const closeAddModal = () => {
     setIsOpenAddModal(false);
   };
@@ -73,7 +73,7 @@ const EnrollConsult = () => {
         size='medium'
         iconType='add-user'
       >
-        <StuRegModalBody />
+        <StuRegModalBody onClose={closeAddModal}/>
       </Modal>
     </div>
   )
