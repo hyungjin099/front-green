@@ -5,7 +5,7 @@ import EnrollConsultListPerClass from '../../components/consult/EnrollConsultLis
 import EnrollConsultTitle from '../../components/consult/EnrollConsultTitle';
 import { selectClassListRecruiting } from '../../apis/classInfoApis';
 import Modal from '../../components/common/Modal';
-import StuRegModalBody from '../../components/consult/StuRegModalBody';
+import RegConsultModalBody from '../../components/consult/RegConsultModalBody';
 
 //훈련 등록 상담
 const EnrollConsult = () => {
@@ -17,6 +17,9 @@ const EnrollConsult = () => {
 
   //훈련생 등록 모달 오픈 여부
   const [isOpenAddModal, setIsOpenAddModal] = useState(false);
+
+  //선택한 클래스 번호
+  const [selectedClassNum, setSelectedClassNum] = useState(null);
 
   //훈련생 등록 모달 오픈 함수
   const openAddModal = (size = 'medium') => {
@@ -63,17 +66,17 @@ const EnrollConsult = () => {
 
   return (
     <div>
-      <Accordion items={accordionData} openAddModal={openAddModal}/>
+      <Accordion items={accordionData} openAddModal={openAddModal} setSelectedClassNum={setSelectedClassNum}/>
 
       {/* 신규 학생 등록 모달 */}
       <Modal
         isOpen={isOpenAddModal}
         onClose={closeAddModal}
-        title="훈련생 등록"
+        title="훈련 등록 상담"
         size='medium'
         iconType='add-user'
       >
-        <StuRegModalBody onClose={closeAddModal}/>
+        <RegConsultModalBody onClose={closeAddModal} selectedClassNum={selectedClassNum}/>
       </Modal>
     </div>
   )

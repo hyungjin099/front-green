@@ -23,6 +23,12 @@
   pointer-events: none;
 }
 
+/* readOnly는 클릭만 막고 디자인은 유지 */
+.radioButton.readOnly {
+  cursor: default;
+  pointer-events: none;
+}
+
 .label {
   font-size: 0.85rem;
   color: inherit;

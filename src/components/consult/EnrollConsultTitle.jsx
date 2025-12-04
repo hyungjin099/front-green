@@ -1,6 +1,6 @@
 import React from 'react'
 
-const EnrollConsultList = ({classInfo}) => {
+const EnrollConsultTile = ({classInfo}) => {
   
 
   return (
@@ -78,4 +78,4 @@ const IconClassType = ({type}) => {
   )
 }
 
-export default EnrollConsultList
+export default EnrollConsultTile

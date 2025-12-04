@@ -7,7 +7,13 @@ export const insertNewConsult = async (consultInfo) => {
 };
 
 //신규 학생 등록 시 상담 이력 조회 API
-export const selectConsulttHistory = async (stuInfo) => {
-  const response = await api.get('/consult/history', {params : stuInfo});
+export const selectConsulttHistory = async (stuNum) => {
+  const response = await api.get(`/consult/history/${stuNum}`);
+  return response;
+};
+
+//동일 학생이 한 과정에 중복 상담 체크인지 확인 API
+export const getIsPossibleAdd = async (consultInfo) => {
+  const response = await api.get('/consult/is-possible-add', {params : consultInfo});
   return response;
 };

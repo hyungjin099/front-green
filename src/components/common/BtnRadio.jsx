@@ -1,17 +1,17 @@
 import React from 'react'
 import styles from './BtnRadio.module.css'
 
-const BtnCheckbox = ({ 
+const BtnRadio = ({ 
   label='title', 
   checked, 
-
   color = 'default',
+  readOnly = false,
   ...props
 }) => {
   return (
-    <label className={`${styles.radioButton} ${checked ? styles.checked : ''} ${styles[color] || ''}`}>
+    <label className={`${styles.radioButton} ${checked ? styles.checked : ''} ${styles[color] || ''} ${readOnly ? styles.readOnly : ''}`}>
       <span className={styles.radiomark}>
-        {checked && (
+        {checked  && (
           <span className={styles.radioDot} />
         )}
       </span>
@@ -19,6 +19,7 @@ const BtnCheckbox = ({
       <input
         type="radio"
         checked={checked}
+        readOnly={readOnly}
         className={styles.hiddenRadio}
         {...props}
       />
@@ -26,4 +27,4 @@ const BtnCheckbox = ({
   )
 }
 
-export default BtnCheckbox
+export default BtnRadio

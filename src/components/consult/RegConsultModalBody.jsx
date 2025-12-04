@@ -1,6 +1,6 @@
 // components/ClassFormModalBody.jsx
 import React, { useEffect, useState } from 'react'
-import styles from './StuRegModalBody.module.css'
+import styles from './RegConsultModalBody.module.css'
 import Button from '../common/Button'
 import FlotingInput from '../common/FlotingInput'
 import FlotingDatePicker from '../common/FlotingDatePicker'
@@ -11,19 +11,23 @@ import { useValidation } from '../../util/useValidation';
 import { required, minLength, phoneNumber } from '../../util/validationRules';
 import BtnRadio from '../common/BtnRadio'
 import { selectEnrollListForCheckDuplicate } from '../../apis/enrollApis'
-import { insertNewConsult, selectConsulttHistory } from '../../apis/consultApis'
+import { getIsPossibleAdd, insertNewConsult, selectConsulttHistory } from '../../apis/consultApis'
 import { selectStaffList } from '../../apis/staffApis'
 import Modal from '../common/Modal'
-import ListTable from '../../components/common/ListTable'
+import ListTable from '../common/ListTable'
 import Tooltip from '../common/Tooltip'
 import { CgDanger } from "react-icons/cg";
+import { selectStuListForCheckDuplicate } from '../../apis/stuApis'
 
-const ClassFormModalBody = ({ onClose }) => {
+const RegConsultModalBody = ({ onClose, selectedClassNum }) => {
   //모집 중인 과정 목록
   const [classList, setClassList] = useState([]);
 
   //영업팀 목록
   const [staffList, setStaffList] = useState([]);
+
+  //정보 중복 학생 목록
+  const [stuList, setStuList] = useState([]);
 
   //수강 이력
   const [enrollHistoryList, setEnrollHistoryList] = useState([]);
@@ -56,6 +60,7 @@ const ClassFormModalBody = ({ onClose }) => {
     validateField,
     validateAllFields
   } = useValidation({
+    stuNum: 0,
     stuName: '',
     stuBirthday: '',
     stuPhone: '',
@@ -63,8 +68,6 @@ const ClassFormModalBody = ({ onClose }) => {
     managerNum : '',
     isDuplicate : 'N'
   });
-
-  console.log(inputData)
 
   useEffect(() => {
     getInitDataList();
@@ -158,27 +161,32 @@ const ClassFormModalBody = ({ onClose }) => {
 
     const param = {stuName : inputData.stuName, stuBirthday : inputData.stuBirthday}
 
-    const [response1, response2] = await Promise.all([
-      //수강 이력 조회
-      selectEnrollListForCheckDuplicate(param),
-      //상담 이력 조회
-      selectConsulttHistory(param)
-    ]);
+    //학생 중복 체크
+    const reuslt = await selectStuListForCheckDuplicate(param);
+    setStuList(reuslt.data);
 
     //상담, 수강 이력이 없다면...
-    if(response1.data.length === 0 && response2.data.length === 0){
+    if(reuslt.data.length === 0){
       toast.info('미등록 훈련생입니다. 👌', { containerId: 'topRight' });
       setBtnDisable(false);
       return ;
     }
 
+    setIsOpenHistoryModal(true);
+  };
+
+  //상담 및 수강 이력 조회
+  const getHistory = async (stuNum) => {
+    const [response1, response2] = await Promise.all([
+      //수강 이력 조회
+      selectEnrollListForCheckDuplicate(stuNum),
+      //상담 이력 조회
+      selectConsulttHistory(stuNum)
+    ]);
+
     setEnrollHistoryList(response1.data);
     setConsultHistoryList(response2.data);
-
-    setIsOpenHistoryModal(true);
-
-
-  };
+  }
 
   //등록버튼 클릭 시 신규 상담 등록
   const regConsult = async () => {
@@ -188,6 +196,17 @@ const ClassFormModalBody = ({ onClose }) => {
     if (!isValid) {
       toast.error('입력 정보를 확인해주세요.', { containerId: 'topRight' });
       return;
+    }
+
+    //기존 등록 학생이라면 중복 확인
+    if(inputData.isDuplicate === 'Y'){
+      //동일 학생이 한 과정에 중복 상담 체크인지 확인
+      const isDuplicateStu = await getIsPossibleAdd(inputData);
+
+      if (!isDuplicateStu.data) {
+        toast.error('상담 내역에 존재하는 학생입니다.', { containerId: 'topRight' });
+        return;
+      }
     }
 
     await toast.promise(
@@ -201,14 +220,11 @@ const ClassFormModalBody = ({ onClose }) => {
     );
 
     onClose();
-    // Object.keys(inputData).forEach(key => {
-    //   if (key === 'isDuplicate') {
-    //     setValue(key, 'N');
-    //   } else {
-    //     setValue(key, '');
-    //   }
-    // });
+  }
 
+  //동일 학생이 한 과정에 중복 상담 체크인지 확인
+  const isPossibleAdd = async () => {
+    const result = await getIsPossibleAdd();
   }
 
   return (
@@ -306,9 +322,10 @@ const ClassFormModalBody = ({ onClose }) => {
           touched={touched.classNum}
           isValid={isFieldValid('classNum')}
         >
-          <option value="">Choose...</option>
           {classList.map(classInfo => (
-            <option key={classInfo.classNum} value={classInfo.classNum}>{classInfo.classInfoVO.className} | {classInfo.classInfoVO.startDate}</option>
+            <option key={classInfo.classNum} value={classInfo.classNum} checked={classInfo.classNum === selectedClassNum}>
+              {classInfo.classInfoVO.className} | {classInfo.classInfoVO.startDate}
+            </option>
           ))}
         </FlotingSelect>
       </div>
@@ -354,137 +371,181 @@ const ClassFormModalBody = ({ onClose }) => {
             </div>
           </div>
           <div>
-            <p className={styles.history_title}>훈련생 정보</p>
+            <p className={styles.history_title}>기존 이력이 있는 훈련생 정보</p>
             <ListTable>
               <colgroup>
-                <col width={'33.3%'}/>
-                <col width={'33.3%'}/>
-                <col width={'33.4%'}/>
+                <col width={'22%'}/>
+                <col width={'22%'}/>
+                <col width={'26%'}/>
+                <col width={'15%'}/>
+                <col width={'15%'}/>
               </colgroup>
               <thead>
                 <tr>
                   <td>학생명</td>
                   <td>생년월일</td>
                   <td>연락처</td>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>{consultHistoryList.length > 0 ? consultHistoryList[0].stuVO.stuName : enrollHistoryList.length > 0 ? enrollHistoryList[0].stuVO.stuName : ''}</td>
-                  <td>{consultHistoryList.length > 0 ? consultHistoryList[0].stuVO.stuBirthday : enrollHistoryList.length > 0 ? enrollHistoryList[0].stuVO.stuBirthday : ''}</td>
-                  <td>{consultHistoryList.length > 0 ? consultHistoryList[0].stuVO.stuPhone : enrollHistoryList.length > 0 ? enrollHistoryList[0].stuVO.stuPhone : ''}</td>
-                </tr>
-              </tbody>
-            </ListTable>
-          </div>
-          <div>
-            <p className={styles.history_title}>상담이력</p>
-            <ListTable>
-              <colgroup>
-                <col width={'5%'}/>
-                <col width={'*'}/>
-                <col width={'25%'}/>
-                <col width={'10%'}/>
-                <col width={'10%'}/>
-              </colgroup>
-              <thead>
-                <tr>
-                  <td>No</td>
-                  <td>상담 과정</td>
-                  <td>과정 운영 기간</td>
-                  <td>담당자</td>
-                  <td>상담내역</td>
+                  <td>이력조회</td>
+                  <td>선 택</td>
                 </tr>
               </thead>
               <tbody>
               {
-                consultHistoryList.length > 0
+                stuList.length > 0 
                 ?
-                consultHistoryList.map((consult, i) => {
+                stuList.map((stu, i) => {
                   return (
-                    <tr key={consult.consultNum}>
-                      <td>{consultHistoryList.length - i}</td>
-                      <td>{consult.classInfoVO.className}</td>
-                      <td>{consult.classInfoVO.endDate} ~ {consult.classInfoVO.startDate}</td>
-                      <td>{consult.staffVO.staffName}</td>
+                    <tr key={i}>
+                      <td>{stu.stuName}</td>
+                      <td>{stu.stuBirthday}</td>
+                      <td>{stu.stuPhone}</td>
                       <td>
-                        <Tooltip 
-                          content={consult.consultContent || "상담 내용이 없습니다."} 
-                          position="top"
-                        >
-                          <span style={{ color: '#673de6', textDecoration: 'underline', cursor: 'pointer' }}>
-                            내역 확인
-                          </span>
-                        </Tooltip>
+                        <Button 
+                          variant='info'
+                          onClick={() => getHistory(stu.stuNum)}
+                          style={{
+                            width : '100%'
+                          }}
+                        >이력조회</Button>
+                      </td>
+                      <td>
+                        <Button 
+                          variant='success'
+                          style={{
+                            width : '100%'
+                          }}
+                          onClick={() => {
+                            setValue('isDuplicate', 'Y');
+                            setValue('stuNum', stu.stuNum);
+                            setIsOpenHistoryModal(false);
+                            setBtnDisable(false);
+                          }}
+                        >선 택</Button>
                       </td>
                     </tr>
                   )
                 })
                 :
                 <tr>
-                  <td colSpan={6}>상담 내역이 없습니다.</td>
+                  <td colSpan={5}>데이터가 없습니다.</td>
                 </tr>
-              }  
+              }
               </tbody>
             </ListTable>
           </div>
           <div>
-            <p className={styles.history_title}>수강이력</p>
-            <ListTable>
-              <colgroup>
-                <col width={'5%'}/>
-                <col width={'*'}/>
-                <col width={'25%'}/>
-                <col width={'10%'}/>
-                <col width={'10%'}/>
-              </colgroup>
-              <thead>
-                <tr>
-                  <td>No</td>
-                  <td>수강 과정</td>
-                  <td>과정 운영 기간</td>
-                  <td>강 사</td>
-                  <td>수료 여부</td>
-                </tr>
-              </thead>
-              <tbody>
-              {
-                enrollHistoryList.length > 0
-                ?
-                enrollHistoryList.map((enroll, i) => {
-                  return (
-                    <tr key={enroll.enrollNum}>
-                      <td>{enrollHistoryList.length - i}</td>
-                      <td>{enroll.classInfoVO.className}</td>
-                      <td>{enroll.classInfoVO.endDate} ~ {enroll.classInfoVO.startDate}</td>
-                      <td>{enroll.staffVO.staffName}</td>
-                      <td>{enroll.stuStatus}</td>
-                    </tr>
-                  )
-                })
-                :
-                <tr>
-                  <td colSpan={6}>수강 내역이 없습니다.</td>
-                </tr>
-              }  
-              </tbody>
-            </ListTable>
+            <div style={{
+              display : 'flex',
+              justifyContent : 'end',
+              margin : '0.5rem 0rem'
+            }}>
+              <Button 
+                variant='primary' 
+                style={{
+                  width : '230px'
+                }}
+                onClick={() => {
+                  setValue('isDuplicate', 'N');
+                  setValue('stuNum', 0);
+                  setIsOpenHistoryModal(false);
+                  setBtnDisable(false);
+                }}
+              >신규 훈련생으로 상담 등록</Button>
+            </div>
           </div>
-          <div style={{
-            display: 'flex',
-            justifyContent: 'center',
-            gap: '1rem'
-          }}>
-            <Button variant='success' onClick={() => setIsOpenHistoryModal(true)}>신규 훈련생으로 상담 등록</Button>
-            <Button variant='info' onClick={() => {
-              setValue({...inputData, isDuplicate : 'Y'});
-              setIsOpenHistoryModal(false);
-            }} >기존 훈련생으로 상담 등록</Button>
-          </div>
+
+          {
+            consultHistoryList.length > 0 &&
+            <div>
+              <p className={styles.history_title}>상담이력</p>
+              <ListTable>
+                <colgroup>
+                  <col width={'5%'}/>
+                  <col width={'*'}/>
+                  <col width={'25%'}/>
+                  <col width={'10%'}/>
+                  <col width={'10%'}/>
+                </colgroup>
+                <thead>
+                  <tr>
+                    <td>No</td>
+                    <td>상담 과정</td>
+                    <td>과정 운영 기간</td>
+                    <td>담당자</td>
+                    <td>상담내역</td>
+                  </tr>
+                </thead>
+                <tbody>
+                {
+                  consultHistoryList.map((consult, i) => {
+                    return (
+                      <tr key={consult.consultNum}>
+                        <td>{consultHistoryList.length - i}</td>
+                        <td>{consult.classInfoVO.className}</td>
+                        <td>{consult.classInfoVO.endDate} ~ {consult.classInfoVO.startDate}</td>
+                        <td>{consult.staffVO.staffName}</td>
+                        <td>
+                          <Tooltip 
+                            content={consult.consultContent || "상담 내용이 없습니다."} 
+                            position="top"
+                          >
+                            <span style={{ color: '#673de6', textDecoration: 'underline', cursor: 'pointer' }}>
+                              내역 확인
+                            </span>
+                          </Tooltip>
+                        </td>
+                      </tr>
+                    )
+                  })
+                }  
+                </tbody>
+              </ListTable>
+            </div>
+          }    
+
+          {
+            enrollHistoryList.length > 0 &&
+            <div>
+              <p className={styles.history_title}>수강이력</p>
+              <ListTable>
+                <colgroup>
+                  <col width={'5%'}/>
+                  <col width={'*'}/>
+                  <col width={'25%'}/>
+                  <col width={'10%'}/>
+                  <col width={'10%'}/>
+                </colgroup>
+                <thead>
+                  <tr>
+                    <td>No</td>
+                    <td>수강 과정</td>
+                    <td>과정 운영 기간</td>
+                    <td>강 사</td>
+                    <td>수료 여부</td>
+                  </tr>
+                </thead>
+                <tbody>
+                {
+                  enrollHistoryList.map((enroll, i) => {
+                    return (
+                      <tr key={enroll.enrollNum}>
+                        <td>{enrollHistoryList.length - i}</td>
+                        <td>{enroll.classInfoVO.className}</td>
+                        <td>{enroll.classInfoVO.endDate} ~ {enroll.classInfoVO.startDate}</td>
+                        <td>{enroll.staffVO.staffName}</td>
+                        <td>{enroll.stuStatus}</td>
+                      </tr>
+                    )
+                  })
+                }  
+                </tbody>
+              </ListTable>
+            </div>
+          }
         </div>
       </Modal>
     </div>
   )
 }
 
-export default ClassFormModalBody
+export default RegConsultModalBody
