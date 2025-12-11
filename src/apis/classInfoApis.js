@@ -13,6 +13,12 @@ export const selectClassListRecruiting = async () => {
   return response;
 };
 
+//모집 중인 과정 + 상담 목록 API
+export const selectClassAndConsultList = async () => {
+  const response = await api.get('/cls/consult-list');
+  return response;
+};
+
 //공공데이터 공휴일 목록 조회 API
 export const getHolidayList = async () => {
   const SERVICE_KEY = 'FMrpIzg0+ITj9WySp4x25d6Oh54CcjUBczr8GQ4/gsuRCmC9ybThYuhVqRN+WBDkQF3EleFDtX6LbzJmZjxf0w==';

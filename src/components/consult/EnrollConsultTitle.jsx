@@ -4,24 +4,45 @@ const EnrollConsultTile = ({classInfo}) => {
   
 
   return (
-    <>
-      <div 
+    <div style={{
+      display : 'flex',
+      alignItems : 'center',
+      gap : '0.8rem'
+    }}>
+      <p
         style={{
-          fontSize:'1.2rem', fontWeight:500, marginBottom:'0.5rem', textAlign:'left',
-          display : 'flex',
-          alignItems : 'center',
-          gap : '0.8rem'
+          fontSize : '1.2rem',
+          fontWeight : '500',
+          borderRight : '2px solid',
+          // paddingRight : '0.5rem',
+          padding : '0.5rem 0.7rem 0.5rem 0'
         }}
       >
-        <IconClassType type={classInfo.classInfoVO.classTypeVO.classTypeName} />
-        <p>{classInfo.classInfoVO.className}</p>
-        <IconDays days={classInfo.studyDay}/>
-      </div>
-      <p style={{textAlign : 'left'}}>
-        {classInfo.startTime} ~ {classInfo.endTime} | 
-        ({classInfo.classInfoVO.totalStudyDay}일 / {classInfo.studyHour}H / {classInfo.classInfoVO.totalStudyDay}H)
+        {classInfo.classRoomName}
       </p>
-    </>
+      <div 
+
+      >
+        <div 
+          style={{
+            fontSize:'1.2rem', fontWeight:500, marginBottom:'0.5rem', textAlign:'left',
+            display : 'flex',
+            alignItems : 'center',
+            gap : '0.8rem'
+          }}
+        >
+          <IconClassType type={classInfo.classTypeName} />
+          <p>{classInfo.className}</p>
+          <IconDays days={classInfo.studyDay}/>
+        </div>
+        
+        <p style={{textAlign : 'left'}}>
+          {classInfo.startTime} ~ {classInfo.endTime} | 
+          ({classInfo.totalStudyDay}일 / {classInfo.studyHour}H / {classInfo.totalStudyDay}H)
+        </p>
+      </div>
+
+    </div>
   )
 }
 

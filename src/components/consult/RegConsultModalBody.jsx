@@ -64,7 +64,7 @@ const RegConsultModalBody = ({ onClose, selectedClassNum }) => {
     stuName: '',
     stuBirthday: '',
     stuPhone: '',
-    classNum: '',
+    classNum: selectedClassNum.toString(),
     managerNum : '',
     isDuplicate : 'N'
   });
@@ -323,7 +323,7 @@ const RegConsultModalBody = ({ onClose, selectedClassNum }) => {
           isValid={isFieldValid('classNum')}
         >
           {classList.map(classInfo => (
-            <option key={classInfo.classNum} value={classInfo.classNum} checked={classInfo.classNum === selectedClassNum}>
+            <option key={classInfo.classNum} value={classInfo.classNum}>
               {classInfo.classInfoVO.className} | {classInfo.classInfoVO.startDate}
             </option>
           ))}

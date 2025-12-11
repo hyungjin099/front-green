@@ -3,7 +3,7 @@ import styles from './EnrollConsult.module.css'
 import Accordion from '../../components/common/Accordion'
 import EnrollConsultListPerClass from '../../components/consult/EnrollConsultListPerClass';
 import EnrollConsultTitle from '../../components/consult/EnrollConsultTitle';
-import { selectClassListRecruiting } from '../../apis/classInfoApis';
+import { selectClassAndConsultList, selectClassListRecruiting } from '../../apis/classInfoApis';
 import Modal from '../../components/common/Modal';
 import RegConsultModalBody from '../../components/consult/RegConsultModalBody';
 
@@ -43,7 +43,7 @@ const EnrollConsult = () => {
     const items = classList.map((classInfo, i) => {
       return {
         title : <EnrollConsultTitle classInfo={classInfo}/>,
-        content : <EnrollConsultListPerClass item={classInfo}/>
+        content : <EnrollConsultListPerClass consultList={classInfo.consultList}/>
       }
     });
 
@@ -53,7 +53,7 @@ const EnrollConsult = () => {
 
   //모집 중 과정 목록 조회 함수
   const getClassListRecruiting = async () => {
-    const respose = await selectClassListRecruiting();
+    const respose = await selectClassAndConsultList();
     setClassList(respose.data);
   };
 

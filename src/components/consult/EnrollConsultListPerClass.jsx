@@ -4,10 +4,10 @@ import Button from '../common/Button'
 import ConsultSheet from './ConsultSheet'
 
 //과정별 과정 등록 상담 목록 컴포넌트
-const EnrollConsultListPerClass = ({item}) => {
+const EnrollConsultListPerClass = ({consultList}) => {
   return (
     <div>
-      <ConsultSheet />
+      <ConsultSheet consultList={consultList}/>
     </div>
   )
 }

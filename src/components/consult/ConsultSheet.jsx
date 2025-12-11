@@ -3,7 +3,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 import styles from './ConsultSheet.module.css';
 
-const ConsultSheet = () => {
+const ConsultSheet = ({consultList}) => {
   // ========== 상태 관리 ==========
   
   const [data, setData] = useState({
@@ -90,7 +90,31 @@ const ConsultSheet = () => {
   // ========== 데이터 로드 ==========
   
   useEffect(() => {
-    fetchData();
+    const pivot = {};
+      consultList.forEach(row => {
+      Object.keys(row).forEach(key => {
+        if (!pivot[key]) {
+          pivot[key] = [];
+        }
+        pivot[key].push(row[key]);
+      });
+    });
+
+    console.log(pivot);
+
+    setData({
+      studentNames : pivot.stuName,
+      rows: [
+          { rowLabel: '담당자', values: pivot.managerName },
+          { rowLabel: '구분 / 등급', values: ['일반 / A', '국1 / B', '국2 / A', '일반 / C'] },
+          { rowLabel: '재직구분', values: pivot.sonsultType },
+          { rowLabel: '진행상태', values: pivot.hrdStatus },
+          { rowLabel: '상담내용', values: pivot.consultContent },
+          { rowLabel: '등록여부', values: pivot.consultStatus }
+        ]
+    });
+
+    //fetchData();
   }, []);
 
   // 드롭다운 외부 클릭 감지

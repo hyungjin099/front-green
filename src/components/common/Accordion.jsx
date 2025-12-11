@@ -29,8 +29,6 @@ const AccordionItem = ({ title, children, openAddModal, selectedClassNum, setSel
     }
   }, [open]);
 
-  //console.log(title.props.classInfo)
-
   return (
     <div className={styles.accordionItem}>
       <h2 className={styles.accordionHeader}>
