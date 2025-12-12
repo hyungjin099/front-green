@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useMemo } from 'react'
 import styles from './EnrollConsult.module.css'
 import Accordion from '../../components/common/Accordion'
 import EnrollConsultListPerClass from '../../components/consult/EnrollConsultListPerClass';
@@ -11,9 +11,6 @@ import RegConsultModalBody from '../../components/consult/RegConsultModalBody';
 const EnrollConsult = () => {
   //모집 중 과정 목록 조회 저장 변수
   const [classList, setClassList] = useState([]);
-
-  //아코디언 목록 데이터
-  const [accordionData, setAccordionData] = useState([]);
 
   //훈련생 등록 모달 오픈 여부
   const [isOpenAddModal, setIsOpenAddModal] = useState(false);
@@ -35,20 +32,16 @@ const EnrollConsult = () => {
     getClassListRecruiting();
   }, []);
 
-  useEffect(() => {
-    if(classList.length === 0) return;
+  // useMemo를 사용하여 불필요한 재생성 방지
+  const accordionData = useMemo(() => {
+    if(classList.length === 0) return [];
 
-    //const items = [];
-
-    const items = classList.map((classInfo, i) => {
+    return classList.map((classInfo, i) => {
       return {
         title : <EnrollConsultTitle classInfo={classInfo}/>,
         content : <EnrollConsultListPerClass consultList={classInfo.consultList}/>
       }
     });
-
-    setAccordionData(items);
-
   }, [classList])
 
   //모집 중 과정 목록 조회 함수

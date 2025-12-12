@@ -2,6 +2,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 import styles from './ConsultSheet.module.css';
+import { selectStaffList } from '../../apis/staffApis';
 
 const ConsultSheet = ({consultList}) => {
   // ========== 상태 관리 ==========
@@ -50,6 +51,9 @@ const ConsultSheet = ({consultList}) => {
   const [scoreRowsVisible, setScoreRowsVisible] = useState(false); // 입학점수 행 표시 여부
   const [scoreRows, setScoreRows] = useState([]); // 입학점수 행 데이터
 
+  //상담 당담자 목록
+  //const [managerList, setManagerList] = useState([]);
+
   // 입학점수 행 라벨 (고정)
   const SCORE_ROW_LABELS = [
     '성향태도 점수',
@@ -61,16 +65,14 @@ const ConsultSheet = ({consultList}) => {
   
   // Select 옵션 데이터
   const [selectOptions, setSelectOptions] = useState({
-    담당자: ['이영희', '최지훈', '박선생', '김선생', '정선생'],
+    담당자: [],
     구분: ['일반', '국1', '국2'],
-    등급: ['A', 'B', 'C', 'D'],
+    등급: ['A', 'B', 'C'],
     재직구분: ['실업자', '재직자'],
     진행상태: ['실업자 HRD대기', '실업자 HRD선발', '재직자 HRD대기', '재직자 HRD선발'],
     등록여부: ['등록확정', '등록 불확실', '가능성 50%', '미정']
   });
 
-
-  
   const resizeStartPos = useRef(0);
   const resizeStartSize = useRef(0);
   const inputRef = useRef(null);
@@ -88,8 +90,11 @@ const ConsultSheet = ({consultList}) => {
   };
 
   // ========== 데이터 로드 ==========
-  
+
   useEffect(() => {
+    // consultList가 없거나 비어있으면 실행하지 않음
+    if (!consultList || consultList.length === 0) return;
+
     const pivot = {};
       consultList.forEach(row => {
       Object.keys(row).forEach(key => {
@@ -100,22 +105,37 @@ const ConsultSheet = ({consultList}) => {
       });
     });
 
-    console.log(pivot);
+    //국취제 정보와 상담 등급 정보 병합
+    const supportAndGradeList = [];
+    pivot.supportType.forEach((item, i) => {
+      const result = `${item} / ${pivot.consultGrade[i]}`;
+      supportAndGradeList.push(result);
+    });
+    
 
     setData({
       studentNames : pivot.stuName,
       rows: [
           { rowLabel: '담당자', values: pivot.managerName },
-          { rowLabel: '구분 / 등급', values: ['일반 / A', '국1 / B', '국2 / A', '일반 / C'] },
-          { rowLabel: '재직구분', values: pivot.sonsultType },
+          //{ rowLabel: '구분 / 등급', values: ['일반 / A', '국1 / B', '국2 / A', '일반 / C'] },
+          { rowLabel: '구분 / 등급', values: supportAndGradeList },
+          { rowLabel: '재직구분', values: pivot.consultType },
           { rowLabel: '진행상태', values: pivot.hrdStatus },
           { rowLabel: '상담내용', values: pivot.consultContent },
           { rowLabel: '등록여부', values: pivot.consultStatus }
         ]
     });
 
+    setColumnWidths([80, 80, 80, 80, 80]);
+    setRowHeights([40, 40, 40, 40, 200, 40]);
+
+    //상담 담당자 목록 조회 및 데이터 세팅
+    getManagerList();
+
+
+
     //fetchData();
-  }, []);
+  }, [consultList]);
 
   // 드롭다운 외부 클릭 감지
   useEffect(() => {
@@ -131,50 +151,26 @@ const ConsultSheet = ({consultList}) => {
     };
   }, [colorDropdownOpen]);
 
-  const fetchData = async () => {
-    try {
-      const response = await axios.get('/api/consult/transposed');
-      const transposedData = response.data;
-      
-      setData(transposedData);
-      
-      const initialWidths = [
-        80,
-        ...transposedData.studentNames.map(() => 80)
-      ];
-      setColumnWidths(initialWidths);
-      
-    } catch (error) {
-      console.error('데이터 로드 실패:', error);
-      
-      // 테스트용 더미 데이터
-      const dummyData = {
-        studentNames: ['김철수(일반)', '박민수(국1)', '이지은(국2)', '최영희(일반)'],
-        rows: [
-          { rowLabel: '담당자', values: ['이영희', '최지훈', '이영희', '박선생'] },
-          { rowLabel: '구분 / 등급', values: ['일반 / A', '국1 / B', '국2 / A', '일반 / C'] },
-          { rowLabel: '재직구분', values: ['실업자', '실업자', '재직자', '재직자'] },
-          { rowLabel: '진행상태', values: ['실업자 HRD대기', '실업자 HRD선발', '재직자 HRD대기', '재직자 HRD선발'] },
-           { 
-            rowLabel: '상담내용', 
-            values: [
-              '진로 상담 진행 중입니다. 학생의 적성과 흥미를 고려하여 여러 진로 옵션을 탐색하고 있습니다.',
-              '학습 상담 완료. 수학 과목에서 어려움을 겪고 있어 추가 보충 수업 필요.',
-              '적성 검사 예정. 다음 주 화요일에 진행 예정이며 결과는 1주일 후 통보.',
-              '부모 상담 완료. 학생의 학업 성취도와 향후 진로 방향에 대해 논의함.'
-            ] 
-          },
-          { rowLabel: '등록여부', values: ['등록확정', '등록 불확실', '가능성 50%', '등록확정'] }
-        ]
-      };
-      setData(dummyData);
-      setColumnWidths([150, 150, 150, 150, 150]);
-      setRowHeights([40, 40, 40, 40, 200, 40]);
-    }
+  const getManagerList = async () => {
+    const response = await selectStaffList('영업');
+    console.log(response.data);
+
+    //국취제 정보와 상담 등급 정보 병합
+    const managerInfoList = [];
+    response.data.forEach((item, i) => {
+      const result2 = {managerNum : item.staffNum, managerName : item.staffName};
+      managerInfoList.push(result2);
+    });
+    console.log(managerInfoList)
+    //setManagerList(response.data);
+
+    setSelectOptions({
+      ...selectOptions,
+      담당자: managerInfoList
+    });
   };
 
   // ========== 컬럼 리사이징 ==========
-  
   const handleColumnResizeStart = (e, colIndex) => {
     e.preventDefault();
     e.stopPropagation();
@@ -600,7 +596,6 @@ const ConsultSheet = ({consultList}) => {
   const isSelected = selectedCell?.rowIndex === rowIndex && selectedCell?.colIndex === colIndex;
   const value = data.rows[rowIndex]?.values[colIndex] || '';
   const rowLabel = data.rows[rowIndex]?.rowLabel;
-  
   const isContentRow = rowLabel === '상담내용';
   const isDualSelectRow = rowLabel === '구분 / 등급';
 
@@ -799,9 +794,17 @@ const ConsultSheet = ({consultList}) => {
           onClick={(e) => e.stopPropagation()}
         >
           <option value="">선택</option>
-          {selectOptions[rowLabel]?.map((option, idx) => (
-            <option key={idx} value={option}>{option}</option>
-          ))}
+          {
+            rowLabel === '담당자'
+            ?
+            selectOptions[rowLabel]?.map((option, idx) => (
+              <option key={idx} value={option.managerNum}>{option.managerName}</option>
+            ))
+            :
+            selectOptions[rowLabel]?.map((option, idx) => (
+              <option key={idx} value={option}>{option}</option>
+            ))
+          }
         </select>
       )}
     </td>
